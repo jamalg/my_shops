@@ -1,0 +1,27 @@
+FROM python:3.7.2-slim
+
+RUN pip install poetry
+
+# Set app user and group
+ENV APP_GROUP=app
+ENV APP_USER=app
+ENV HOME=/home/$APP_USER
+RUN addgroup --system $APP_GROUP && adduser --system --ingroup $APP_GROUP $APP_USER
+
+# Set back folder
+ENV APP_FOLDER=$HOME/back
+RUN mkdir $APP_FOLDER
+WORKDIR $APP_FOLDER
+
+COPY ./poetry.lock ./pyproject.toml $APP_FOLDER/
+RUN poetry install
+
+COPY . $APP_FOLDER/
+
+RUN chown -R $APP_GROUP:$APP_USER $APP_FOLDER/
+USER $APP_USER
+
+
+ENV PYTHONPATH=../
+ENV FLASK_APP=$APP_FOLDER/app.py
+CMD poetry run flask run --host=0.0.0.0
