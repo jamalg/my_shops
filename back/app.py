@@ -1,6 +1,7 @@
 from flask import Flask
 
 from back import config, models, exceptions, auth, api, cli
+from back.extensions import google
 
 
 def create_app() -> Flask:
@@ -12,5 +13,6 @@ def create_app() -> Flask:
     exceptions.init_app(app)
     models.init_app(app)
     cli.init_app(app)
+    google.init_app(app)
 
     return app
