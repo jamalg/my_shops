@@ -21,6 +21,9 @@ class Config(BaseConfig):
     POSTGRES_DB = EnvironmentVariable()
     POSTGRES_DB_TEST = EnvironmentVariable()
     POSTGRES_HOST = EnvironmentVariable()
+    # --> Google Place API
+    GOOGLE_CLOUD_API_KEY = EnvironmentVariable()
+    GOOGLE_CLOUD_DEFAULT_OUTPUT = "json"
 
     def __init__(self) -> None:
         if self.TESTING:
