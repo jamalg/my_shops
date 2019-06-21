@@ -69,3 +69,8 @@ def like_data():
 @pytest.fixture()
 def dislike_data():
     return read_json_from_data_folder("dislike_data")
+
+
+@pytest.fixture()
+def place_data():
+    return read_json_from_data_folder("place_data")
