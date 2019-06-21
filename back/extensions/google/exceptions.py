@@ -1,3 +1,4 @@
+from flask import jsonify
 from requests import Response
 
 
@@ -15,3 +16,7 @@ class GoogleApiError(Exception):
         if response.headers["content-type"].startswith("application/json"):
             return cls(message=response.reason, data=response.json())
         return cls(message=response.reason)
+
+    @staticmethod
+    def error_handler(error) -> Response:
+        return jsonify({"message": error.message}), 400
