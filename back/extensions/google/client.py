@@ -1,15 +1,16 @@
-from typing import Dict, Tuple, Optional
-import re
+from typing import Dict, Optional, List
 import urllib
 
 import requests
 
-from back.utils.geo import Coordinate
+from back.utils.geo import Coordinates
+from back.utils.image import Image
 from back.extensions.google.exceptions import GoogleApiError
 from back.extensions.google import constants
+from back.extensions.google.mixins import ExcecutorMixin, PhotoApiMixin
 
 
-class GoogleCloudApi:
+class GoogleCloudApi(ExcecutorMixin, PhotoApiMixin):
     def __init__(self, api_key: str = None, output: str = "json") -> None:
         self.output = output
         self.api_key = api_key
@@ -19,38 +20,17 @@ class GoogleCloudApi:
         response = requests.get("{}?{}".format(url, url_params))
         if response.ok:
             data = response.json()
-            if data["status"] == constants.GOOGLE_PLACES_API_SUCCESS_STATUS:
+            if data["status"] in constants.GOOGLE_PLACES_OK_STATUSES:
                 return data
             raise GoogleApiError(message=data.get("error_message", data["status"]), data=data)
         raise GoogleApiError.from_http_response(response)
-
-    @staticmethod
-    def filename_from_headers(headers: requests.structures.CaseInsensitiveDict) -> str:
-        content_disposition = headers.get("content-disposition", None)
-        if content_disposition:
-            # Need to bulletproof the regexp before "real" go live
-            # Don't know exactly why the r is necessary to turn down flake8 error
-            match = re.search(r'filename="([\w._\-/]+)"', content_disposition)
-            if match:
-                return match.group(1)
-        image_type = headers["content-type"].split("/")[-1]
-        return "image.{}".format(image_type)
-
-    @staticmethod
-    def headers_to_photo_metadata(headers: requests.structures.CaseInsensitiveDict) -> Dict:
-        mimetype = headers["content-type"]
-        filename = GoogleCloudApi.filename_from_headers(headers)
-        return dict(
-            mimetype=mimetype,
-            filename=filename
-        )
 
     def photo(
             self,
             photo_reference: str,
             max_height: Optional[int] = None,
             max_width: Optional[int] = None
-            ) -> Tuple[Dict, bytes]:
+            ) -> Image:
         params = dict(
             key=self.api_key,
             photoreference=photo_reference,
@@ -65,10 +45,15 @@ class GoogleCloudApi:
         url_params = urllib.parse.urlencode(params)
         response = requests.get("{}?{}".format(constants.GOOGLE_PLACE_PHOTO_URL, url_params))
         if response.ok:
-            return GoogleCloudApi.headers_to_photo_metadata(response.headers), response.content
+            metadata = GoogleCloudApi.headers_to_photo_metadata(response.headers)
+            return Image(
+                binary=response.content,
+                mimetype=metadata["mimetype"],
+                filename=metadata["filename"]
+            )
         raise GoogleApiError.from_http_response(response)
 
-    def nearby(self, location: Coordinate, radius: int, type: str) -> Dict:
+    def nearby(self, location: Coordinates, radius: int, type: str) -> Dict:
         params = dict(
             key=self.api_key,
             location=str(location),
@@ -76,7 +61,7 @@ class GoogleCloudApi:
             type=type
         )
         url = "{}/{}".format(constants.GOOGLE_PLACES_NEARBY_URL, self.output)
-        return self._get(url=url, params=params)
+        return self._get(url=url, params=params)["results"]
 
     def place(self, place_id: str) -> Dict:
         params = dict(
@@ -85,4 +70,10 @@ class GoogleCloudApi:
             fields=constants.PLACE_DETAILS_FIELDS
         )
         url = "{}/{}".format(constants.GOOGLE_PLACE_DETAILS_URL, self.output)
-        return self._get(url=url, params=params)
+        return self._get(url=url, params=params)["result"]
+
+    def places(self, place_ids: List[str]) -> List[Dict]:
+        return GoogleCloudApi.threaded(
+            callback=self.place,
+            kwargs_list=[dict(place_id=place_id) for place_id in place_ids]
+        )

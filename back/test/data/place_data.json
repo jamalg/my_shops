@@ -1,0 +1,51 @@
+{
+    "geometry": {
+        "location": {
+            "lat": 33.58906739999999,
+            "lng": -7.596706299999997
+        },
+        "viewport": {
+            "northeast": {
+                "lat": 33.59044313029149,
+                "lng": -7.595409069708497
+            },
+            "southwest": {
+                "lat": 33.58774516970849,
+                "lng": -7.598107030291501
+            }
+        }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+    "id": "222bb22bb22bb22bb22",
+    "name": "Text place name",
+    "opening_hours": {
+        "open_now": false
+    },
+    "formatted_address" : "5, 48 Pirrama Rd, Pyrmont NSW 2009, Australia",
+    "photos": [
+        {
+            "height": 1836,
+            "html_attributions": [
+                "Attribution text"
+            ],
+            "photo_reference": "Ckjnrfekjw4r5tNRRi0mItmZkIQnrqPPDqzMS5RqtOWLYARKyYuCS7Ggjz2IHxByS7LuqBKrzNYmkW2kPUNCNLiTUwt9bxymWl6Hue6X7ILiPHa7BM0jmgcspEzpH_id2kd4GwaVEhApAm8bo5pv759t0i8w_ruWGhRxUUCZqHfeSEsyZoZQpx5ktVBDow",
+            "width": 3264
+        }
+    ],
+    "place_id": "111aa11aa11aa11aa11",
+    "plus_code": {
+        "compound_code": "HCQ3+J8 City, Country",
+        "global_code": "8C5JHCQ3+J8"
+    },
+    "rating": 4.6,
+    "reference": "111aa11aa11aa11aa11",
+    "scope": "GOOGLE",
+    "types": [
+        "store",
+        "general_contractor",
+        "point_of_interest",
+        "establishment"
+    ],
+    "user_ratings_total": 16,
+    "vicinity": "111,, Some address somewhere"
+}
