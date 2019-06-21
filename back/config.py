@@ -7,6 +7,7 @@ class Config(BaseConfig):
     # App settings
     # --> General
     APP_NAME = "my-shops"
+    SERVER_NAME = EnvironmentVariable()
     ENVIRONMENT = EnvironmentVariable()
     TESTING = BoolEnvironmentVariable(default=False)
     # --> Security
@@ -24,6 +25,10 @@ class Config(BaseConfig):
     # --> Google Place API
     GOOGLE_CLOUD_API_KEY = EnvironmentVariable()
     GOOGLE_CLOUD_DEFAULT_OUTPUT = "json"
+    GOOGLE_PHOTO_MAX_HEIGHT = 300
+    MAX_THREAD_POOL_SIZE = 25
+    DEFAULT_NEARBY_RADIUS = 1500
+    DEFAULT_NEARBY_TYPE = "store"
 
     def __init__(self) -> None:
         if self.TESTING:
