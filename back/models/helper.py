@@ -1,11 +1,13 @@
 import logging
 from typing import Dict, Any
+from datetime import datetime, timezone
 
 from sqlalchemy import exc
 from sqlalchemy.ext.declarative import declarative_base
 from marshmallow import Schema
 from back.utils.sqlalchemy.helpers import session_manager
 
+from back.config import config
 from back.models import db
 from back.models.social import Like, DisLike
 from back.schemas.user import UserSchema
@@ -66,3 +68,19 @@ def delete_like(like_id: int) -> None:
 
 def delete_dislike(dislike_id: int) -> None:
     return delete_one(DisLike, dislike_id)
+
+
+def purge_dislikes() -> None:
+    with session_manager(db.UnscopedSession) as db_session:
+        try:
+            expired = db_session.query(DisLike).filter(
+                datetime.now(tz=timezone.utc) - DisLike.created_at > config.DISLIKE_EXPIRY
+            )
+            [db_session.delete(d) for d in expired]
+            db_session.commit()
+            logger.info(
+                "Purged {} expired dislikes from db".format(expired.count()),
+                extra={"dislike_ids": [d.id for d in expired]}
+            )
+        except exc.SQLAlchemyError as e:
+            raise _SQLAlchemyError(str(e))

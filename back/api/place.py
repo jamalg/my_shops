@@ -26,7 +26,7 @@ def get_nearby_shops():
     )
     filtered_nearby_shops = utils.filter_nearby_places(
         places=nearby_shops,
-        filter_out=[social.place_id for social in current_user.likes + current_user.dislikes]
+        filter_out=[social.place_id for social in current_user.likes + current_user.fresh_dislikes]
     )
     context = dict(
         location=user_location,

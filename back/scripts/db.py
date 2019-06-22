@@ -34,3 +34,10 @@ def fill_db(likes, dislikes):
     dislikes = [dict(place_id=generate_place_id(), user_id=user_id) for _ in range(dislikes)]
     [helper.add_like(like) for like in likes]
     [helper.add_dislike(dislike) for dislike in dislikes]
+
+# The command could be called once every deploy within CI/CD routines
+# Another option could be to configure a database trigger but it has
+# a higher performance cost
+@db_cli.command("purge-dislikes")
+def purge_dislikes():
+    helper.purge_dislikes()

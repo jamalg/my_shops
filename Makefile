@@ -1,5 +1,8 @@
 default: up
 
+purge-dislikes:
+	docker-compose exec back poetry run flask db purge-dislikes
+
 fill-db:
 	docker-compose exec back poetry run flask db fill
 
