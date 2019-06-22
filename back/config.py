@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from flask import Flask
 
 from back.utils.config_class import BaseConfig, EnvironmentVariable, BoolEnvironmentVariable, IntEnvironmentVariable
@@ -14,6 +16,8 @@ class Config(BaseConfig):
     SECRET_KEY = EnvironmentVariable()
     BCRYPT_LOG_ROUNDS = IntEnvironmentVariable(default=4)
     BCRYPT_HANDLE_LONG_PASSWORDS = True
+    # --> Social
+    DISLIKE_EXPIRY = timedelta(minutes=120)
 
     # External Services
     # --> DB
