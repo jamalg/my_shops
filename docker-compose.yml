@@ -37,3 +37,15 @@ services:
   redis:
     env_file: .env
     image: redis:5.0.5-alpine
+
+  front:
+    env_file: .env
+    build:
+      context: ./front
+      dockerfile: docker/Dockerfile-dev
+    volumes:
+      - "./front:/usr/src/app"
+      - 'container_node_module:/usr/src/app/node_modules'
+
+volumes:
+  container_node_module:
