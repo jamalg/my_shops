@@ -20,7 +20,7 @@ def get_nearby_shops():
 
     user_location = Coordinates(latitude=latitude, longitude=longitude)
     nearby_shops = google_client.nearby(
-        location=user_location,
+        location=Coordinates.discrete_from_location(user_location),
         radius=config.DEFAULT_NEARBY_RADIUS,
         type=config.DEFAULT_NEARBY_TYPE
     )
