@@ -1,0 +1,9 @@
+.app-body {
+  min-height: 100vh;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  max-width: 960px;
+  background-color: white;
+}
