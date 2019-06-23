@@ -15,6 +15,7 @@ flask-login = "^0.4.1"
 flask-bcrypt = "^0.7.1"
 requests = "^2.22"
 geopy = "^1.20"
+redis = "^3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.4"
