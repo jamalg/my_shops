@@ -104,4 +104,20 @@ venv.bak/
 .mypy_cache/
 
 back/.DS_Store
-.vscode/
+.vscode
+
+# Front files
+.DS_Store
+/front/node_modules
+front/.pnp
+front/.pnp.js
+front/coverage
+front/build
+front/.DS_Store
+front/.env.local
+front/.env.development.local
+front/.env.test.local
+front/.env.production.local
+front/npm-debug.log*
+front/yarn-debug.log*
+front/yarn-error.log*
