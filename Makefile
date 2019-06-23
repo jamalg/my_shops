@@ -1,5 +1,8 @@
 default: up
 
+flush-redis:
+	docker-compose exec back poetry run flask redis flush
+
 purge-dislikes:
 	docker-compose exec back poetry run flask db purge-dislikes
 
