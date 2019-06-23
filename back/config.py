@@ -33,10 +33,18 @@ class Config(BaseConfig):
     MAX_THREAD_POOL_SIZE = 25
     DEFAULT_NEARBY_RADIUS = 1500
     DEFAULT_NEARBY_TYPE = "store"
+    # --> Redis
+    REDIS_HOST = EnvironmentVariable()
+    REDIS_PORT = IntEnvironmentVariable(default=6379)
+    REDIS_DB = IntEnvironmentVariable(default=0)
+    NEARBY_PLACE_TTL = timedelta(days=7)
+    PLACE_TTL = timedelta(days=7)
+    PHOTO_TTL = timedelta(days=30)
 
     def __init__(self) -> None:
         if self.TESTING:
             self.POSTGRES_DB = self.POSTGRES_DB_TEST
+            self.REDIS_DB = 1
             self.LOGIN_DISABLED = True
 
     @property
