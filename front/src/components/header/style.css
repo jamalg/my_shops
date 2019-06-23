@@ -1,0 +1,44 @@
+.main-brand {
+    color: var(--dark);
+    font-size: 2.5em;
+    font-weight: 100;
+}
+.navbar-brand a {
+    outline: none
+}
+
+.navbar-brand a:hover {
+    text-decoration: none;
+}
+
+.main-navbav-nav-text {
+    position: relative;
+    font-size: 1.5em;
+    color: var(--ligh-grey);
+    padding-bottom: 5px;
+    transition: color 300ms ease;
+}
+
+.main-navbav-nav-text::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 3px solid;
+    transform: scale(0);
+    transition: transform 300ms ease;
+}
+
+.nav-link.active .main-navbav-nav-text::before, .nav-link:not(.active):hover .main-navbav-nav-text::before {
+    transform: scale(1);
+}
+
+.nav-link:not(.active):hover .main-navbav-nav-text {
+    color: var(--medium-grey);
+}
+
+.nav-link.active .main-navbav-nav-text {
+    color: var(--dark);
+}
+
