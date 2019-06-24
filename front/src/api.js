@@ -50,3 +50,5 @@ export const addUser = (userData) => postBackApi("users", userData)
 
 // Places
 export const getNearby = (latitude, longitude) => getBackApi(`places/nearby?latitude=${latitude}&longitude=${longitude}`)
+export const addLike = (placeId) => postBackApi("me/likes", {placeId})
+export const addDisLike = (placeId) => postBackApi("me/dislikes", {placeId})
