@@ -31,6 +31,10 @@ export const addLikeRequested = utils.makeCreators(defs.ADD_LIKE_REQUESTED)
 export const addLikeSuccess = utils.makeCreators(defs.ADD_LIKE_SUCCESS, "placeId", "likeId")
 export const addLikeFailed = utils.makeCreators(defs.ADD_LIKE_FAILED)
 
+export const deleteLikeRequested = utils.makeCreators(defs.DELETE_LIKE_REQUESTED)
+export const deleteLikeSuccess = utils.makeCreators(defs.DELETE_LIKE_SUCCESS, "placeId")
+export const deleteLikeFailed = utils.makeCreators(defs.DELETE_LIKE_FAILED)
+
 export const addDisLikeRequested = utils.makeCreators(defs.ADD_DISLIKE_REQUESTED)
 export const addDisLikeSuccess = utils.makeCreators(defs.ADD_DISLIKE_SUCCESS, "placeId")
 export const addDisLikeFailed = utils.makeCreators(defs.ADD_DISLIKE_FAILED)

@@ -84,10 +84,9 @@ export default function currentUser(state=fromJS({}), action) {
 
         // SOCIAL
         case defs.ADD_LIKE_SUCCESS:
-            return state.withMutations(s =>
-                s.set("addLikeStatus", defs.STATUS.SUCCESS)
-                 .removeIn(["nearbyPlacesIds", action.payload.placeId])
-            )
+            return state.removeIn(["nearbyPlacesIds", action.payload.placeId])
+        case defs.DELETE_LIKE_SUCCESS:
+            return state.removeIn(["likedPlacesIds", action.payload.placeId])
 
         case defs.ADD_DISLIKE_SUCCESS:
             return state.withMutations(s =>
