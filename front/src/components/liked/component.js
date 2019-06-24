@@ -3,15 +3,13 @@ import React from 'react'
 import PlaceCard from '../place'
 import './style.css'
 
-export const Nearby = ({ places, addLike, addDisLike }) => (
-    <div className="nearby-wrapper">
+export const Liked = ({ places}) => (
+    <div className="liked-wrapper">
         <div className="places">
-            {places.sort((p,p_) => p.distanceToLocation - p_.distanceToLocation).map(place => (
+            {places.map(place => (
                 <PlaceCard
                     key={place.id}
                     {...place}
-                    addLike={addLike}
-                    addDisLike={addDisLike}
                 />
             )
             )}

@@ -20,3 +20,6 @@ export const getUserLocation = (state) => getLocationStatus(state) === defs.STAT
 export const getNearbyFetchStatus = (state) => state.getIn(["currentUser", "nearbyStatus"])
 export const getNearbyPlaceIds = (state) => getNearbyFetchStatus(state) === defs.STATUS.SUCCESS && state.getIn(["currentUser", "nearbyPlacesIds"])
 export const getNearbyPlaces = (state) => getNearbyPlaceIds(state) && getNearbyPlaceIds(state).map(placeId => state.getIn(["places", placeId.toString()]))
+export const getLikedFetchStatus = (state) => state.getIn(["currentUser", "likedStatus"])
+export const getLikedPlaceIds = (state) => getLikedFetchStatus(state) === defs.STATUS.SUCCESS && state.getIn(["currentUser", "likedPlacesIds"])
+export const getLikedPlaces = (state) => getLikedPlaceIds(state) && getLikedPlaceIds(state).map(placeId => state.getIn(["places", placeId.toString()]))
