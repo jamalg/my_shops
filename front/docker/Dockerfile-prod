@@ -1,0 +1,35 @@
+# base image
+FROM node:11.6.0-alpine as builder
+
+RUN apk add git
+
+WORKDIR /usr/src/app
+
+# install app dependencies
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY package.json /usr/src/app/package.json
+RUN npm install --silent
+RUN npm install react-scripts@2.1.2 -g --silent
+
+# set environment variables
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL $REACT_APP_API_URL
+ARG REACT_APP_ENVIRONMENT
+ENV REACT_APP_ENVIRONMENT $REACT_APP_ENVIRONMENT
+
+# create build
+COPY . /usr/src/app
+RUN npm run build
+
+
+# base image
+FROM nginx:1.15.8-alpine
+
+# copy static files
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+
+# expose port
+EXPOSE 80
+
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]
