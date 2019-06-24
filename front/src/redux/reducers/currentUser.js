@@ -69,6 +69,19 @@ export default function currentUser(state=fromJS({}), action) {
                 .set("nearbyError", action.payload.error)
             )
 
+        case defs.FETCH_LIKED_REQUESTED:
+            return state.set("likedStatus", defs.STATUS.REQUESTING)
+        case defs.FETCH_LIKED_SUCCESS:
+            return state.withMutations(s =>
+                s.set("likedStatus", defs.STATUS.SUCCESS)
+                 .set("likedPlacesIds", Set(action.payload.placeIds))
+            )
+        case defs.FETCH_LIKED_FAILED:
+            return state.withMutations(s =>
+                s.set("likedStatus", defs.STATUS.FAILED)
+                .set("likedError", action.payload.error)
+            )
+
         // SOCIAL
         case defs.ADD_LIKE_REQUESTED:
             return state.set("addLikeStatus", defs.STATUS.REQUESTING)

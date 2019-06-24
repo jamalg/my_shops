@@ -64,6 +64,22 @@ export function fetchNearby(latitude, longitude) {
         }
 }
 
+export function fetchLiked() {
+    return (dispatch) => {
+        dispatch(sync.fetchLikedRequested())
+        api.getLiked()
+        .then(
+            (places) => {
+                const data = normalize(places, [ schemas.place ] )
+
+                dispatch(sync.addEntities(data.entities))
+                dispatch(sync.fetchLikedSuccess(places.map(place => place.id)))
+            },
+            (error) => dispatch(sync.fetchLikedFailed(error.message))
+        )
+        }
+}
+
 export function addLike(placeId) {
     return (dispatch) => {
         dispatch(sync.addLikeRequested())

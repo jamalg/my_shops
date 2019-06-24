@@ -23,6 +23,10 @@ export const fetchNearbyRequested = utils.makeCreators(defs.FETCH_NEARBY_REQUEST
 export const fetchNearbySuccess = utils.makeCreators(defs.FETCH_NEARBY_SUCCESS, "place_ids")
 export const fetchNearbyFailed = utils.makeCreators(defs.FETCH_NEARBY_FAILED)
 
+export const fetchLikedRequested = utils.makeCreators(defs.FETCH_LIKED_REQUESTED)
+export const fetchLikedSuccess = utils.makeCreators(defs.FETCH_LIKED_SUCCESS, "placeIds")
+export const fetchLikedFailed = utils.makeCreators(defs.FETCH_LIKED_FAILED)
+
 export const addLikeRequested = utils.makeCreators(defs.ADD_LIKE_REQUESTED)
 export const addLikeSuccess = utils.makeCreators(defs.ADD_LIKE_SUCCESS, "place_id")
 export const addLikeFailed = utils.makeCreators(defs.ADD_LIKE_FAILED)
