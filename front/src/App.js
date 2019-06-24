@@ -6,6 +6,7 @@ import Home from './containers/home'
 import Login from './containers/login'
 import Register from './components/register'
 import Nearby from './containers/nearby'
+import Liked from './containers/liked'
 import './App.css';
 
 
@@ -18,6 +19,7 @@ export default function() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/nearby" component={Nearby} />
+          <Route exact path="/liked" component={Liked} />
       </div>
     </div>
   )
