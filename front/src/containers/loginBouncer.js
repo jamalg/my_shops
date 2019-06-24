@@ -27,5 +27,3 @@ export const withLoginBouncer = (Component) => {
         }
     }
 }
-
-
