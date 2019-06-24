@@ -28,7 +28,7 @@ export const fetchLikedSuccess = utils.makeCreators(defs.FETCH_LIKED_SUCCESS, "p
 export const fetchLikedFailed = utils.makeCreators(defs.FETCH_LIKED_FAILED)
 
 export const addLikeRequested = utils.makeCreators(defs.ADD_LIKE_REQUESTED)
-export const addLikeSuccess = utils.makeCreators(defs.ADD_LIKE_SUCCESS, "place_id")
+export const addLikeSuccess = utils.makeCreators(defs.ADD_LIKE_SUCCESS, "placeId", "likeId")
 export const addLikeFailed = utils.makeCreators(defs.ADD_LIKE_FAILED)
 
 export const addDisLikeRequested = utils.makeCreators(defs.ADD_DISLIKE_REQUESTED)

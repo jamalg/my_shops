@@ -85,8 +85,8 @@ export function addLike(placeId) {
         dispatch(sync.addLikeRequested())
         api.addLike(placeId)
         .then(
-            () => {
-                dispatch(sync.addLikeSuccess(placeId))
+            (likeData) => {
+                dispatch(sync.addLikeSuccess(placeId, likeData.id))
                 return {status: defs.STATUS.SUCCESS}
             },
             (error) => {
