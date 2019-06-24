@@ -17,7 +17,7 @@ I add here only what is specific to this project:
 Places objects in the back end database mainly because it involved to solve the classic update and refresh issues inherent to maintaining a copy of an external database. Nevertheless, the API is cached to mitigate the performance cost of not having data locally.
 - Dislikes are stored in the main database but contrary to Redis, PostgreSQL doesn't come up with out of the box support for an expiry feature. Only using active
 dislike is done at the application level by using the `User.fresh_dilikes` property. Then there is a command script to purge old dislikes. Calling this script every deploy seemed less costly than having an SQLALchemy trigger or listener that does this after every commit for example.
-
+- There some work left to do on configuring the Nginx that serves the front assets in `front/docker/Dockerfile-prod`. The issue is that if you navigate to the prod url then to `/nearby` it works but not if you navigate directly to `/nearby` withou loading the React app first.
 
 ## How to boot up the app
 
