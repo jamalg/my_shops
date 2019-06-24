@@ -16,6 +16,7 @@ class PlaceSchema(Schema):
     longitude = fields.Function(lambda obj: obj["geometry"]["location"]["lng"])
     vicinity = fields.String()
     formatted_address = fields.String(dump_to="address")
+    like_id = fields.Integer()
 
     def build_photo_url(self, obj: Dict) -> str:
         if "photos" in obj and "photo_api_url" in self.context:

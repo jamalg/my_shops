@@ -48,6 +48,12 @@ def get_liked_places():
             return jsonify({"message": "'latitude' or 'longitude' invalid floats"})
 
     liked_places = google_client.places(place_ids=[like.place_id for like in current_user.likes])
+
+    # Add like_id to places
+    like_id_by_place_id = {like.place_id: like.id for like in current_user.likes}
+    for liked_place in liked_places:
+        liked_place["like_id"] = like_id_by_place_id[liked_place["place_id"]]
+
     context = dict(
         photo_api_url=url_for("photos.get_photo", photo_reference="", _external=True)
     )
