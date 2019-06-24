@@ -35,7 +35,7 @@ def get_nearby_shops():
     return jsonify(PlaceSchema(many=True, context=context).dump(filtered_nearby_shops).data)
 
 
-@bp.route("/likes", methods=["GET"])
+@bp.route("/liked", methods=["GET"])
 @login_required
 def get_liked_places():
     latitude, longitude = request.args.get("latitude"), request.args.get("longitude")
