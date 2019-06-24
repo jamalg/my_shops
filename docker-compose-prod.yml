@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  nginx:
+    build:
+      context: ./back/docker/nginx
+      dockerfile: Dockerfile-prod
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - back
+      - front
+
+  back:
+    env_file: prod.env
+    image: back
+    build:
+      context: ./back
+      dockerfile: docker/back/Dockerfile-prod
+    depends_on:
+      - db
+      - redis
+
+  front:
+    env_file: prod.env
+    build:
+      context: ./front
+      dockerfile: docker/Dockerfile-prod
+      args:
+        - REACT_APP_ENVIRONMENT=production
+        - REACT_APP_API_URL=http://YOUR_PRODUCTION_HOST/api
+
+  redis:
+    env_file: .env
+    image: redis:5.0.5-alpine
+
+  db:
+    env_file: prod.env
+    image: postgres:10.6-alpine
+
