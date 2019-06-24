@@ -34,6 +34,42 @@ export default function currentUser(state=fromJS({}), action) {
                 .delete("logoutError")
             )
 
+        // USER LOCATION
+        case defs.USER_LOCATION_REQUESTED:
+            return state.withMutations(s =>
+                s.set("locationStatus", defs.STATUS.REQUESTING)
+                .delete("latitude")
+                .delete("longitude")
+                .delete("locationError")
+            )
+        case defs.USER_LOCATION_SUCCESS:
+            return state.withMutations(s =>
+                s.set("locationStatus", defs.STATUS.SUCCESS)
+                .set("latitude", action.payload.latitude)
+                .set("longitude", action.payload.longitude)
+                .delete("locationError")
+            )
+        case defs.USER_LOCATION_FAILED:
+            return state.withMutations(s =>
+                s.set("locationStatus", defs.STATUS.FAILED)
+                .set("locationError", action.payload.error)
+                .delete("latitude")
+                .delete("longitude")
+            )
+
+        // USER NEARBY PLACES
+        case defs.FETCH_NEARBY_REQUESTED:
+            return state.set("nearbyStatus", defs.STATUS.REQUESTING)
+        case defs.FETCH_NEARBY_SUCCESS:
+            return state.withMutations(s =>
+                s.set("nearbyStatus", defs.STATUS.SUCCESS)
+                 .set("nearbyPlacesIds", fromJS(action.payload.place_ids))
+            )
+        case defs.FETCH_NEARBY_FAILED:
+            return state.withMutations(s =>
+                s.set("nearbyStatus", defs.STATUS.FAILED)
+                .set("nearbyError", action.payload.error)
+            )
         default:
             return state
     }

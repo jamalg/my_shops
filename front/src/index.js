@@ -16,7 +16,8 @@ if (process.env.REACT_APP_ENVIRONMENT && process.env.REACT_APP_ENVIRONMENT !== "
 }
 
 const initialState = fromJS({
-    currentUser: {}
+    currentUser: {},
+    places: {}
 })
 const store = configureStore(initialState)
 
