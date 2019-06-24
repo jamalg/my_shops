@@ -97,6 +97,23 @@ export function addLike(placeId) {
         }
 }
 
+export function deleteLike(likeId, placeId) {
+    return (dispatch) => {
+        dispatch(sync.deleteLikeRequested())
+        api.deleteLike(likeId)
+        .then(
+            () => {
+                dispatch(sync.deleteLikeSuccess(placeId))
+                return {status: defs.STATUS.SUCCESS}
+            },
+            (error) => {
+                dispatch(sync.deleteLikeFailed(error.message))
+                return {status: defs.STATUS.FAILED, errors: error.message}
+            }
+        )
+        }
+}
+
 export function addDisLike(placeId) {
     return (dispatch) => {
         dispatch(sync.addDisLikeRequested())

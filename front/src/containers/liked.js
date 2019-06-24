@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import withImmutablePropsToJS from 'with-immutable-props-to-js'
 
 import Liked from '../components/liked'
-import { fetchLiked } from '../redux/actions/async'
+import { fetchLiked, deleteLike } from '../redux/actions/async'
 import { getLikedPlaces, getLikedFetchStatus, isUserLogged } from '../redux/selectors'
 
 
@@ -17,6 +17,7 @@ class LikedContainer extends React.Component {
                     places={this.props.places}
                     status={this.props.status}
                     isLogged={this.props.isLogged}
+                    deleteLike={this.props.deleteLike}
                 />
     }
 }
@@ -29,6 +30,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchLiked,
+    deleteLike
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withImmutablePropsToJS(LikedContainer))
