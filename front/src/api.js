@@ -47,3 +47,6 @@ export const registerUser = (userData) => postBackApi("users", userData)
 
 // General user management
 export const addUser = (userData) => postBackApi("users", userData)
+
+// Places
+export const getNearby = (latitude, longitude) => getBackApi(`places/nearby?latitude=${latitude}&longitude=${longitude}`)
