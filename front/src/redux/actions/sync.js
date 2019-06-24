@@ -20,7 +20,7 @@ export const userLocationFailed = utils.makeCreators(defs.USER_LOCATION_FAILED, 
 
 // --> PLACES
 export const fetchNearbyRequested = utils.makeCreators(defs.FETCH_NEARBY_REQUESTED)
-export const fetchNearbySuccess = utils.makeCreators(defs.FETCH_NEARBY_SUCCESS, "place_ids")
+export const fetchNearbySuccess = utils.makeCreators(defs.FETCH_NEARBY_SUCCESS, "placeIds")
 export const fetchNearbyFailed = utils.makeCreators(defs.FETCH_NEARBY_FAILED)
 
 export const fetchLikedRequested = utils.makeCreators(defs.FETCH_LIKED_REQUESTED)
@@ -32,7 +32,7 @@ export const addLikeSuccess = utils.makeCreators(defs.ADD_LIKE_SUCCESS, "placeId
 export const addLikeFailed = utils.makeCreators(defs.ADD_LIKE_FAILED)
 
 export const addDisLikeRequested = utils.makeCreators(defs.ADD_DISLIKE_REQUESTED)
-export const addDisLikeSuccess = utils.makeCreators(defs.ADD_DISLIKE_SUCCESS, "place_id")
+export const addDisLikeSuccess = utils.makeCreators(defs.ADD_DISLIKE_SUCCESS, "placeId")
 export const addDisLikeFailed = utils.makeCreators(defs.ADD_DISLIKE_FAILED)
 
 // -> GENERIC ADD ENTITIES
