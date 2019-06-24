@@ -5,6 +5,18 @@ import * as sync from './sync'
 import * as api from '../../api'
 import * as defs from '../../defs'
 
+export function fetchUserLocation() {
+    return (dispatch) => {
+        dispatch(sync.userLocationRequested())
+        if (!navigator.geolocation) dispatch(sync.userLocationFailed("Geolocalisation is not supported by your browser"))
+        navigator.geolocation.getCurrentPosition(
+            (position) => dispatch(sync.userLocationSuccess(position.coords.latitude, position.coords.longitude)),
+            (error) => dispatch(sync.userLoginFailed(error.message))
+        )
+    }
+}
+
+
 export function logUser(userId, password) {
     return (dispatch) => {
         dispatch(sync.userLoginRequested(userId))
@@ -32,6 +44,22 @@ export function addUser(userData) {
                 dispatch(sync.addUserFailed(error.message))
                 return {status: defs.STATUS.FAILED, errors: error.message}
             }
+        )
+        }
+}
+
+export function fetchNearby(latitude, longitude) {
+    return (dispatch) => {
+        dispatch(sync.fetchNearbyRequested())
+        api.getNearby(latitude, longitude)
+        .then(
+            (places) => {
+                const data = normalize(places, [ schemas.place ] )
+
+                dispatch(sync.addEntities(data.entities))
+                dispatch(sync.fetchNearbySuccess(places.map(place => place.id)))
+            },
+            (error) => dispatch(sync.fetchNearbyFailed(error.message))
         )
         }
 }

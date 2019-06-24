@@ -5,6 +5,7 @@ import Header from './containers/header'
 import Home from './containers/home'
 import Login from './containers/login'
 import Register from './components/register'
+import Nearby from './containers/nearby'
 import './App.css';
 
 
@@ -16,6 +17,7 @@ export default function() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/nearby" component={Nearby} />
       </div>
     </div>
   )
