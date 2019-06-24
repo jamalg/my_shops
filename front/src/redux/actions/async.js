@@ -63,3 +63,37 @@ export function fetchNearby(latitude, longitude) {
         )
         }
 }
+
+export function addLike(placeId) {
+    return (dispatch) => {
+        dispatch(sync.addLikeRequested())
+        api.addLike(placeId)
+        .then(
+            () => {
+                dispatch(sync.addLikeSuccess(placeId))
+                return {status: defs.STATUS.SUCCESS}
+            },
+            (error) => {
+                dispatch(sync.addLikeFailed(error.message))
+                return {status: defs.STATUS.FAILED, errors: error.message}
+            }
+        )
+        }
+}
+
+export function addDisLike(placeId) {
+    return (dispatch) => {
+        dispatch(sync.addDisLikeRequested())
+        api.addDisLike(placeId)
+        .then(
+            () => {
+                dispatch(sync.addDisLikeSuccess(placeId))
+                return {status: defs.STATUS.SUCCESS}
+            },
+            (error) => {
+                dispatch(sync.addDisLikeFailed(error.message))
+                return {status: defs.STATUS.FAILED, errors: error.message}
+            }
+        )
+        }
+}

@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable'
+import { fromJS, Set } from 'immutable'
 import * as defs from '../../defs'
 
 export default function currentUser(state=fromJS({}), action) {
@@ -61,13 +61,41 @@ export default function currentUser(state=fromJS({}), action) {
         case defs.FETCH_NEARBY_SUCCESS:
             return state.withMutations(s =>
                 s.set("nearbyStatus", defs.STATUS.SUCCESS)
-                 .set("nearbyPlacesIds", fromJS(action.payload.place_ids))
+                 .set("nearbyPlacesIds", Set(action.payload.place_ids))
             )
         case defs.FETCH_NEARBY_FAILED:
             return state.withMutations(s =>
                 s.set("nearbyStatus", defs.STATUS.FAILED)
                 .set("nearbyError", action.payload.error)
             )
+
+        // SOCIAL
+        case defs.ADD_LIKE_REQUESTED:
+            return state.set("addLikeStatus", defs.STATUS.REQUESTING)
+        case defs.ADD_LIKE_SUCCESS:
+            return state.withMutations(s =>
+                s.set("addLikeStatus", defs.STATUS.SUCCESS)
+                 .removeIn(["nearbyPlacesIds", action.payload.place_id])
+            )
+        case defs.ADD_LIKE_FAILED:
+            return state.withMutations(s =>
+                s.set("addLikeStatus", defs.STATUS.FAILED)
+                .set("addLikeError", action.payload.error)
+            )
+
+        case defs.ADD_DISLIKE_REQUESTED:
+            return state.set("addDisLikeStatus", defs.STATUS.REQUESTING)
+        case defs.ADD_DISLIKE_SUCCESS:
+            return state.withMutations(s =>
+                s.set("addDisLikeStatus", defs.STATUS.SUCCESS)
+                 .removeIn(["nearbyPlacesIds", action.payload.place_id])
+            )
+        case defs.ADD_DISLIKE_FAILED:
+            return state.withMutations(s =>
+                s.set("addDisLikeStatus", defs.STATUS.FAILED)
+                .set("addDisLikeError", action.payload.error)
+            )
+
         default:
             return state
     }
